@@ -59,7 +59,7 @@ module.exports = {
         stock: 50,
         imageUrl: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500',
         size: 'M',
-        color: 'Blanco',
+        color: '#FFFFFF',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -70,7 +70,7 @@ module.exports = {
         stock: 40,
         imageUrl: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500',
         size: 'L',
-        color: 'Beige',
+        color: '#F5F5DC',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -81,7 +81,7 @@ module.exports = {
         stock: 65,
         imageUrl: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=500',
         size: 'M',
-        color: 'Azul Marino',
+        color: '#000080',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -92,7 +92,7 @@ module.exports = {
         stock: 55,
         imageUrl: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500',
         size: '32',
-        color: 'Azul Oscuro',
+        color: '#000080',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -104,7 +104,7 @@ module.exports = {
         stock: 70,
         imageUrl: 'https://images.unsplash.com/photo-1564584217132-2271feaeb3c5?w=500',
         size: 'S',
-        color: 'Floral',
+        color: '#FFC0CB-#FFFF00',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -115,7 +115,7 @@ module.exports = {
         stock: 45,
         imageUrl: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500',
         size: 'M',
-        color: 'Negro',
+        color: '#000000',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -126,7 +126,7 @@ module.exports = {
         stock: 60,
         imageUrl: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500',
         size: 'M',
-        color: 'Negro',
+        color: '#000000',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -137,7 +137,7 @@ module.exports = {
         stock: 35,
         imageUrl: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=500',
         size: 'S',
-        color: 'Rosa',
+        color: '#FFC0CB',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -149,7 +149,7 @@ module.exports = {
         stock: 80,
         imageUrl: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=500',
         size: '8-10',
-        color: 'Multicolor',
+        color: '#FF0000-#0000FF-#FFFF00',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -160,7 +160,7 @@ module.exports = {
         stock: 70,
         imageUrl: 'https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=500',
         size: '10-12',
-        color: 'Gris',
+        color: '#808080',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -171,7 +171,7 @@ module.exports = {
         stock: 50,
         imageUrl: 'https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=500',
         size: '6-8',
-        color: 'Floral',
+        color: '#FFC0CB-#FFFFFF',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -183,7 +183,7 @@ module.exports = {
         stock: 100,
         imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
         size: '42',
-        color: 'Blanco/Negro',
+        color: '#FFFFFF-#000000',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -194,7 +194,7 @@ module.exports = {
         stock: 35,
         imageUrl: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=500',
         size: '41',
-        color: 'Negro',
+        color: '#000000',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -205,7 +205,7 @@ module.exports = {
         stock: 60,
         imageUrl: 'https://images.unsplash.com/photo-1603487742131-4160ec999306?w=500',
         size: '38',
-        color: 'Marrón',
+        color: '#8B4513',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -216,7 +216,7 @@ module.exports = {
         stock: 25,
         imageUrl: 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500',
         size: '43',
-        color: 'Café',
+        color: '#8B4513',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -228,7 +228,7 @@ module.exports = {
         stock: 90,
         imageUrl: 'https://images.unsplash.com/photo-1624222247344-550fb60583bb?w=500',
         size: 'Ajustable',
-        color: 'Negro',
+        color: '#000000',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -239,7 +239,7 @@ module.exports = {
         stock: 75,
         imageUrl: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500',
         size: 'Única',
-        color: 'Gris',
+        color: '#808080',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -250,7 +250,7 @@ module.exports = {
         stock: 55,
         imageUrl: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=500',
         size: 'Única',
-        color: 'Beige',
+        color: '#F5F5DC',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -261,7 +261,7 @@ module.exports = {
         stock: 40,
         imageUrl: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=500',
         size: 'Mediano',
-        color: 'Café',
+        color: '#8B4513',
         createdAt: new Date(),
         updatedAt: new Date()
       }
