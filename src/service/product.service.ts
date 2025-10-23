@@ -52,7 +52,6 @@ export class ProductService implements IProductService {
     }
 
     const product = await this.productRepository.createProduct(data);
-    // Obtener el producto con la categoría incluida
     const productWithCategory = await this.productRepository.findProductById(product.id);
     return ProductMapper.toProductWithCategoryDTO(productWithCategory);
   }
@@ -85,7 +84,6 @@ export class ProductService implements IProductService {
       throw AppError.notFound(`No se encontró el producto con el nombre "${name}"`);
     }
 
-    // Obtener el producto completo con la categoría
     const productWithCategory = await this.productRepository.findProductById(product.id);
     return ProductMapper.toProductWithCategoryDTO(productWithCategory);
   }
@@ -126,7 +124,6 @@ export class ProductService implements IProductService {
       throw AppError.notFound(`No se encontró el producto con ID ${id}`);
     }
 
-    // Obtener el producto actualizado con la categoría
     const productWithCategory = await this.productRepository.findProductById(id);
     return ProductMapper.toProductWithCategoryDTO(productWithCategory);
   }

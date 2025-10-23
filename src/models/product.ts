@@ -31,7 +31,7 @@ export class Product
     Product.init(
       {
         id: {
-          type: DataTypes.INTEGER.UNSIGNED,
+          type: DataTypes.INTEGER,
           autoIncrement: true,
           primaryKey: true,
         },
@@ -40,7 +40,7 @@ export class Product
           allowNull: false,
         },
         categoryId: {
-          type: DataTypes.INTEGER.UNSIGNED,
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
         price: {
@@ -48,7 +48,7 @@ export class Product
           allowNull: false,
         },
         stock: {
-          type: DataTypes.INTEGER.UNSIGNED,
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
         createdAt: {

@@ -1,0 +1,58 @@
+# Dependencias
+node_modules
+npm-debug.log
+yarn-error.log
+.npm
+package-lock.json
+
+# Archivos compilados
+dist
+build
+*.js.map
+
+# Variables de entorno
+.env
+.env.*
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Temporales
+tmp
+temp
+.cache
+
+# Tests
+coverage
+.nyc_output
+test
+*.test.ts
+*.spec.ts
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentación
+*.md
+
+# Scripts de prueba
+test-connection.js
+check-tables.js

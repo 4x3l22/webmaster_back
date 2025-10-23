@@ -39,7 +39,7 @@ module.exports = {
 
     // Obtener los IDs de las categorías
     const categories = await queryInterface.sequelize.query(
-      'SELECT id, name FROM Categories;',
+      'SELECT id, name FROM "Categories";',
       { type: Sequelize.QueryTypes.SELECT }
     );
 
@@ -212,9 +212,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    // Eliminar productos primero (por la foreign key)
     await queryInterface.bulkDelete('Products', null, {});
-    // Luego eliminar categorías
     await queryInterface.bulkDelete('Categories', null, {});
   }
 };

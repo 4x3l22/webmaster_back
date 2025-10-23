@@ -1,4 +1,4 @@
-# Guía Rápida de Migraciones de Sequelize
+# Guía Rápida de Migraciones con Supabase
 
 ## 🚀 Inicio Rápido
 
@@ -21,18 +21,17 @@ npm run dev
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run db:setup` | Crea la BD y ejecuta todas las migraciones |
-| `npm run db:create` | Solo crea la base de datos |
+| `npm run db:setup` | Ejecuta todas las migraciones en Supabase |
 | `npm run db:migrate` | Ejecuta las migraciones pendientes |
 | `npm run db:migrate:undo` | Revierte la última migración |
+| `npm run db:migrate:undo:all` | Revierte todas las migraciones |
 | `npm run db:seed` | Inserta datos de prueba |
 | `npm run db:seed:undo` | Elimina los datos de prueba |
-| `npm run db:drop` | **⚠️ ELIMINA la base de datos completa** |
 
-## 🏗️ Estructura Creada
+## 🏗️ Estructura Creada en Supabase
 
 ```
-webmaster_db/
+postgres (Supabase)/
 ├── Categories
 │   ├── id (PK)
 │   ├── name
@@ -68,36 +67,37 @@ npx sequelize-cli seed:generate --name add-more-categories
 
 La configuración de la base de datos está en:
 ```
-src/config/config.json
+.env
 ```
 
-Asegúrate de ajustar:
-- `username`: Tu usuario de MySQL
-- `password`: Tu contraseña de MySQL
-- `database`: Nombre de la base de datos
-- `host`: Servidor (generalmente "localhost")
-- `port`: Puerto de MySQL (generalmente 3306)
+Variables necesarias:
+- `DB_HOST`: Host de Supabase (pooler.supabase.com)
+- `DB_PORT`: Puerto (6543 para pooler)
+- `DB_NAME`: Nombre de la base de datos (postgres)
+- `DB_USER`: Usuario con formato postgres.PROJECT_REF
+- `DB_PASSWORD`: Contraseña de tu base de datos Supabase
+
+**Nota:** Para migraciones con Sequelize CLI, también necesitas `src/config/config.json` configurado.
 
 ## 🔄 Flujo de Trabajo
 
 1. **Desarrollo Local:**
    ```bash
-   npm run db:setup
+   npm run db:migrate
    npm run db:seed
    npm run dev
    ```
 
 2. **Producción:**
    ```bash
-   npm run db:create
    npm run db:migrate
    npm start
    ```
 
-3. **Reset completo (desarrollo):**
+3. **Reset de datos (desarrollo):**
    ```bash
-   npm run db:drop
-   npm run db:setup
+   npm run db:migrate:undo:all
+   npm run db:migrate
    npm run db:seed
    ```
 
@@ -107,8 +107,11 @@ Asegúrate de ajustar:
 - ✅ Cada migración se registra en la tabla `SequelizeMeta`
 - ✅ Los soft deletes están habilitados (`deletedAt`)
 - ✅ Las relaciones entre tablas están definidas con claves foráneas
+- ✅ Conexión a Supabase vía Connection Pooler (IPv4)
+- ⚠️ PostgreSQL es case-sensitive: usa comillas dobles en nombres con mayúsculas
 - ⚠️ Nunca modifiques una migración que ya fue ejecutada
 - ⚠️ Para cambios, crea una nueva migración
+- ⚠️ No se pueden crear/eliminar bases de datos en Supabase (usa la existente)
 
 ## 🆘 Ayuda
 

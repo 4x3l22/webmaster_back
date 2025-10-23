@@ -8,14 +8,14 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER.UNSIGNED
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
       categoryId: {
-        type: Sequelize.INTEGER.UNSIGNED,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Categories',
@@ -29,19 +29,19 @@ module.exports = {
         allowNull: false
       },
       stock: {
-        type: Sequelize.INTEGER.UNSIGNED,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal('NOW()')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal('NOW()')
       },
       deletedAt: {
         type: Sequelize.DATE,
@@ -49,7 +49,6 @@ module.exports = {
       }
     });
 
-    // Agregar índices
     await queryInterface.addIndex('Products', ['categoryId']);
     await queryInterface.addIndex('Products', ['name']);
   },

@@ -1,18 +1,10 @@
 import { Sequelize } from 'sequelize';
-import path from 'path';
 import { Dialect } from 'sequelize';
 import { Product } from './product';
 import { Category } from './category';
+import dotenv from 'dotenv';
 
-interface DBConfig {
-  username: string;
-  password: string;
-  database: string;
-  host: string;
-  port: number;
-  dialect: Dialect;
-  logging?: boolean | ((sql: string, timing?: number) => void);
-}
+dotenv.config();
 
 export class Database {
   private static instance: Database;
@@ -22,21 +14,31 @@ export class Database {
   public Category = Category;
 
   private constructor() {
-    const env = process.env.NODE_ENV || 'development';
-    const configPath = path.join(__dirname, '../config/config.json');
-    const config: DBConfig = require(configPath)[env];
+    const database = process.env.DB_NAME as string;
+    const username = process.env.DB_USER as string;
+    const password = process.env.DB_PASSWORD as string;
+    const host = process.env.DB_HOST as string;
+    const port = parseInt(process.env.DB_PORT as string);
+    const isProduction = process.env.NODE_ENV as string;
 
-    this.sequelize = new Sequelize(
-      config.database,
-      config.username,
-      config.password,
-      {
-        host: config.host,
-        port: config.port,
-        dialect: config.dialect,
-        logging: config.logging,
+    this.sequelize = new Sequelize(database, username, password, {
+      host,
+      port,
+      dialect: 'postgres' as Dialect,
+      logging: !isProduction ? console.log : false,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      },
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
       }
-    );
+    });
 
     this.initModels();
   }

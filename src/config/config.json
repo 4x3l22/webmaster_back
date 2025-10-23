@@ -1,11 +1,30 @@
 {
-  "development":{
-    "host": "localhost",
-    "port": 3306,
-    "dialect": "mysql",
-    "username": "root",
-    "password": "123456",
-    "database": "webmaster_db",
+  "development": {
+    "username": "postgres.uqrpbiapxrxllxzxcvvb",
+    "password": "FDziukSHHfy3BtJt",
+    "database": "postgres",
+    "host": "aws-1-us-east-2.pooler.supabase.com",
+    "port": 6543,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    "logging": false
+  },
+  "production": {
+    "username": "postgres.uqrpbiapxrxllxzxcvvb",
+    "password": "FDziukSHHfy3BtJt",
+    "database": "postgres",
+    "host": "aws-1-us-east-2.pooler.supabase.com",
+    "port": 6543,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
     "logging": false
   }
 }
