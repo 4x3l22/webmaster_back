@@ -9,6 +9,9 @@ export class ProductMapper {
       categoryId: product.categoryId,
       price: Number(product.price),
       stock: product.stock,
+      imageUrl: product.imageUrl,
+      size: product.size,
+      color: product.color,
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,
     };
@@ -25,6 +28,9 @@ export class ProductMapper {
       categoryId: product.categoryId,
       price: Number(product.price),
       stock: product.stock,
+      imageUrl: product.imageUrl,
+      size: product.size,
+      color: product.color,
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,
       category: {

@@ -6,12 +6,15 @@ export interface ProductAttributes {
   categoryId: number;
   price: number;
   stock: number;
+  imageUrl?: string;
+  size?: string;
+  color?: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
 }
 
-export type ProductCreationAttributes = Optional<ProductAttributes, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>;
+export type ProductCreationAttributes = Optional<ProductAttributes, 'id' | 'imageUrl' | 'size' | 'color' | 'createdAt' | 'updatedAt' | 'deletedAt'>;
 
 export class Product
   extends Model<ProductAttributes, ProductCreationAttributes>
@@ -22,6 +25,9 @@ export class Product
   public categoryId!: number;
   public price!: number;
   public stock!: number;
+  public imageUrl?: string;
+  public size?: string;
+  public color?: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -50,6 +56,18 @@ export class Product
         stock: {
           type: DataTypes.INTEGER,
           allowNull: false,
+        },
+        imageUrl: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
+        size: {
+          type: DataTypes.STRING(50),
+          allowNull: true,
+        },
+        color: {
+          type: DataTypes.STRING(50),
+          allowNull: true,
         },
         createdAt: {
           type: DataTypes.DATE,
