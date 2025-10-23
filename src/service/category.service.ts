@@ -1,16 +1,15 @@
-import { Database } from "../models";
-import { CategoryRepository } from "../repository/category.repository";
 import { AppError } from "../errors/AppError";
 import { CreateCategoryDTO, UpdateCategoryDTO, CategoryResponseDTO } from "../interface/category.dto";
 import { CategoryMapper } from "../mappers/category.mapper";
+import { ICategoryRepository } from "../interface/ICategoryRepository";
+import { ICategoryService } from "../interface/ICategoryService";
 
 
-export class CategoryService {
-    private categoryRepository: CategoryRepository;
+export class CategoryService implements ICategoryService {
+    private categoryRepository: ICategoryRepository;
 
-    constructor() {
-        const db = Database.getInstance();
-        this.categoryRepository = new CategoryRepository(db.Category);
+    constructor(categoryRepository: ICategoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     public async createCategory(data: CreateCategoryDTO): Promise<CategoryResponseDTO> {

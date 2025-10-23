@@ -1,15 +1,19 @@
 import { Request, Response } from 'express';
-import { ProductService } from '../service/product.service';
 import { AppError } from '../errors/AppError';
 import { CreateProductDTO, UpdateProductDTO } from '../interface/product.dto';
+import { IProductService } from '../interface/IProductService';
 
 export class ProductController {
-  private static productService = new ProductService();
+  private productService: IProductService;
 
-  public static async createProduct(req: Request, res: Response): Promise<void> {
+  constructor(productService: IProductService) {
+    this.productService = productService;
+  }
+
+  public async createProduct(req: Request, res: Response): Promise<void> {
     try {
       const dto: CreateProductDTO = req.body;
-      const product = await ProductController.productService.createProduct(dto);
+      const product = await this.productService.createProduct(dto);
       res.status(201).json(product);
     } catch (err: any) {
       if (err instanceof AppError) {
@@ -20,9 +24,9 @@ export class ProductController {
     }
   }
 
-  public static async getProducts(req: Request, res: Response): Promise<void> {
+  public async getProducts(req: Request, res: Response): Promise<void> {
     try {
-      const products = await ProductController.productService.getAllProducts();
+      const products = await this.productService.getAllProducts();
       res.status(200).json(products);
     } catch (err: any) {
       if (err instanceof AppError) {
@@ -33,9 +37,9 @@ export class ProductController {
     }
   }
 
-  public static async getProductById(req: Request, res: Response): Promise<void> {
+  public async getProductById(req: Request, res: Response): Promise<void> {
     try {
-      const product = await ProductController.productService.getProductById(Number(req.params.id));
+      const product = await this.productService.getProductById(Number(req.params.id));
       res.status(200).json(product);
     } catch (err: any) {
       if (err instanceof AppError) {
@@ -46,9 +50,9 @@ export class ProductController {
     }
   }
 
-  public static async getProductByName(req: Request, res: Response): Promise<void> {
+  public async getProductByName(req: Request, res: Response): Promise<void> {
     try {
-      const product = await ProductController.productService.getProductByName(req.params.name);
+      const product = await this.productService.getProductByName(req.params.name);
       res.status(200).json(product);
     } catch (err: any) {
       if (err instanceof AppError) {
@@ -59,10 +63,10 @@ export class ProductController {
     }
   }
 
-  public static async updateProduct(req: Request, res: Response): Promise<void> {
+  public async updateProduct(req: Request, res: Response): Promise<void> {
     try {
       const dto: UpdateProductDTO = req.body;
-      const updatedProduct = await ProductController.productService.updateProduct(Number(req.params.id), dto);
+      const updatedProduct = await this.productService.updateProduct(Number(req.params.id), dto);
       res.status(200).json(updatedProduct);
     } catch (err: any) {
       if (err instanceof AppError) {
@@ -73,9 +77,9 @@ export class ProductController {
     }
   }
 
-  public static async deleteProduct(req: Request, res: Response): Promise<void> {
+  public async deleteProduct(req: Request, res: Response): Promise<void> {
     try {
-      await ProductController.productService.deleteProduct(Number(req.params.id));
+      await this.productService.deleteProduct(Number(req.params.id));
       res.status(204).send();
     } catch (err: any) {
       if (err instanceof AppError) {

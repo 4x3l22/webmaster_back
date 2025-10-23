@@ -1,18 +1,17 @@
-import { ProductRepository } from '../repository/product.repository';
-import { Database } from '../models';
-import { CategoryRepository } from '../repository/category.repository';
 import { AppError } from '../errors/AppError';
 import { CreateProductDTO, UpdateProductDTO, ProductWithCategoryDTO } from '../interface/product.dto';
 import { ProductMapper } from '../mappers/product.mapper';
+import { IProductRepository } from '../interface/IProductRepository';
+import { ICategoryRepository } from '../interface/ICategoryRepository';
+import { IProductService } from '../interface/IProductService';
 
-export class ProductService {
-  private productRepository: ProductRepository;
-  private categoryRepository: CategoryRepository;
+export class ProductService implements IProductService {
+  private productRepository: IProductRepository;
+  private categoryRepository: ICategoryRepository;
 
-  constructor() {
-    const db = Database.getInstance();
-    this.productRepository = new ProductRepository(db.Product);
-    this.categoryRepository = new CategoryRepository(db.Category);
+  constructor(productRepository: IProductRepository, categoryRepository: ICategoryRepository) {
+    this.productRepository = productRepository;
+    this.categoryRepository = categoryRepository;
   }
 
   public async createProduct(data: CreateProductDTO): Promise<ProductWithCategoryDTO> {

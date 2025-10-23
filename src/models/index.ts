@@ -41,7 +41,6 @@ export class Database {
     this.initModels();
   }
 
-  /** Singleton: garantiza una sola instancia */
   public static getInstance(): Database {
     if (!Database.instance) {
       Database.instance = new Database();
@@ -49,12 +48,10 @@ export class Database {
     return Database.instance;
   }
 
-  /** Inicializa todos los modelos */
   private initModels(): void {
     this.Category.initModel(this.sequelize);
     this.Product.initModel(this.sequelize);
     
-    // Definir relaciones
     this.Category.hasMany(this.Product, {
       foreignKey: 'categoryId',
       as: 'products'
@@ -65,18 +62,15 @@ export class Database {
     });
   }
 
-  /** Sincroniza los modelos con la base de datos */
   public async syncModels(force = false): Promise<void> {
     await this.sequelize.sync({ force });
     console.log('🗄️ Modelos sincronizados con la base de datos.');
   }
 
-  /** Devuelve la instancia Sequelize (si se necesita en otro lugar) */
   public getSequelize(): Sequelize {
     return this.sequelize;
   }
 
-  /** Prueba de conexión */
   public async testConnection(): Promise<void> {
     try {
       await this.sequelize.authenticate();

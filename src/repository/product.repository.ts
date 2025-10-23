@@ -1,8 +1,9 @@
 import { ModelStatic } from 'sequelize';
 import { Product, ProductAttributes, ProductCreationAttributes } from '../models/product';
 import { Category } from '../models/category';
+import { IProductRepository } from '../interface/IProductRepository';
 
-export class ProductRepository {
+export class ProductRepository implements IProductRepository {
   private productModel: ModelStatic<Product>;
 
   constructor(productModel: ModelStatic<Product>) {

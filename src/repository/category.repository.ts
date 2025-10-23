@@ -1,7 +1,8 @@
 import { ModelStatic } from "sequelize";
 import { Category, CategoryAttributes, CategoryCreationAttributes } from "../models/category";
+import { ICategoryRepository } from "../interface/ICategoryRepository";
 
-export class CategoryRepository {
+export class CategoryRepository implements ICategoryRepository {
     private categoryModel: ModelStatic<Category>;
 
     constructor(categoryModel: ModelStatic<Category>) {
