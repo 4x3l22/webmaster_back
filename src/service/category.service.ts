@@ -1,6 +1,8 @@
 import { Database } from "../models";
-import { Category, CategoryAttributes, CategoryCreationAttributes } from "../models/category";
 import { CategoryRepository } from "../repository/category.repository";
+import { AppError } from "../errors/AppError";
+import { CreateCategoryDTO, UpdateCategoryDTO, CategoryResponseDTO } from "../interface/category.dto";
+import { CategoryMapper } from "../mappers/category.mapper";
 
 
 export class CategoryService {
@@ -11,48 +13,90 @@ export class CategoryService {
         this.categoryRepository = new CategoryRepository(db.Category);
     }
 
-    /** 🧩 Crear una nueva categoría */
-    public async createCategory(data: CategoryCreationAttributes): Promise<Category> {
+    public async createCategory(data: CreateCategoryDTO): Promise<CategoryResponseDTO> {
         const { name } = data;
 
-        // Validaciones básicas
-        if (!name) throw new Error('El nombre de la categoría es obligatorio');
-
-        // Evita duplicados
-        const existing = await this.categoryRepository.findCategoryByName(name);
-        if (existing) throw new Error(`Ya existe una categoría con el nombre "${name}"`);
-
-        // Crea la categoría
-        return this.categoryRepository.createCategory(data);
-    }
-
-    /** 📦 Obtener todas las categorías */
-    public async getAllCategories(): Promise<Category[]> {
-        return this.categoryRepository.getAllCategories();
-    }
-
-    /** 🔍 Buscar categoría por nombre */
-    public async getCategoryByName(name: string): Promise<Category | null> {
-        if (!name) throw new Error('El nombre es obligatorio');
-        return this.categoryRepository.findCategoryByName(name);
-    }
-
-    /** ✏️ Actualizar una categoría */
-    public async updateCategory(id: number, data: Partial<CategoryAttributes>): Promise<Category> {
-        const [count, updated] = await this.categoryRepository.updateCategory(id, data);
-
-        if (count === 0) {
-            throw new Error(`No se encontró la categoría con ID ${id}`);
+        if (!name || name.trim() === '') {
+            throw AppError.badRequest('El nombre de la categoría es obligatorio');
         }
 
-        return updated[0];
+        const existing = await this.categoryRepository.findCategoryByName(name);
+        if (existing) {
+            throw AppError.conflict(`Ya existe una categoría con el nombre "${name}"`);
+        }
+
+        const category = await this.categoryRepository.createCategory(data);
+        return CategoryMapper.toResponseDTO(category);
     }
 
-    /** 🗑️ Eliminar (lógicamente) una categoría */
+    public async getAllCategories(): Promise<CategoryResponseDTO[]> {
+        const categories = await this.categoryRepository.getAllCategories();
+        return CategoryMapper.toResponseDTOList(categories);
+    }
+
+    public async getCategoryById(id: number): Promise<CategoryResponseDTO> {
+        if (!id || id <= 0) {
+            throw AppError.badRequest('El ID debe ser un número válido');
+        }
+
+        const category = await this.categoryRepository.findCategoryById(id);
+        if (!category) {
+            throw AppError.notFound(`No se encontró la categoría con ID ${id}`);
+        }
+
+        return CategoryMapper.toResponseDTO(category);
+    }
+
+    public async getCategoryByName(name: string): Promise<CategoryResponseDTO> {
+        if (!name || name.trim() === '') {
+            throw AppError.badRequest('El nombre es obligatorio');
+        }
+
+        const category = await this.categoryRepository.findCategoryByName(name);
+        if (!category) {
+            throw AppError.notFound(`No se encontró la categoría con el nombre "${name}"`);
+        }
+
+        return CategoryMapper.toResponseDTO(category);
+    }
+
+    public async updateCategory(id: number, data: UpdateCategoryDTO): Promise<CategoryResponseDTO> {
+        if (!id || id <= 0) {
+            throw AppError.badRequest('El ID debe ser un número válido');
+        }
+
+        if (data.name && data.name.trim() === '') {
+            throw AppError.badRequest('El nombre no puede estar vacío');
+        }
+
+        if (data.name) {
+            const existing = await this.categoryRepository.findCategoryByName(data.name);
+            if (existing && existing.id !== id) {
+                throw AppError.conflict(`Ya existe una categoría con el nombre "${data.name}"`);
+            }
+        }
+
+        const updated = await this.categoryRepository.updateCategory(id, data);
+        if (!updated) {
+            throw AppError.notFound(`No se encontró la categoría con ID ${id}`);
+        }
+
+        return CategoryMapper.toResponseDTO(updated);
+    }
+
     public async deleteCategory(id: number): Promise<void> {
+        if (!id || id <= 0) {
+            throw AppError.badRequest('El ID debe ser un número válido');
+        }
+
+        const category = await this.categoryRepository.findCategoryById(id);
+        if (!category) {
+            throw AppError.notFound(`No se encontró la categoría con ID ${id}`);
+        }
+
         const deletedCount = await this.categoryRepository.deleteCategory(id);
         if (deletedCount === 0) {
-            throw new Error(`No se encontró la categoría con ID ${id}`);
+            throw AppError.notFound(`No se pudo eliminar la categoría con ID ${id}`);
         }
     }
 }

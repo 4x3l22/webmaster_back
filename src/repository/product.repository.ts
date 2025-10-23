@@ -1,5 +1,6 @@
 import { ModelStatic } from 'sequelize';
 import { Product, ProductAttributes, ProductCreationAttributes } from '../models/product';
+import { Category } from '../models/category';
 
 export class ProductRepository {
   private productModel: ModelStatic<Product>;
@@ -8,30 +9,42 @@ export class ProductRepository {
     this.productModel = productModel;
   }
 
-  /** 🧩 Crear un nuevo producto */
   public async createProduct(data: ProductCreationAttributes): Promise<Product> {
     return this.productModel.create(data);
   }
 
-  /** 📦 Obtener todos los productos */
   public async getAllProducts(): Promise<Product[]> {
-    return this.productModel.findAll();
+    return this.productModel.findAll({
+      include: [{
+        model: Category,
+        as: 'category',
+        attributes: ['id', 'name', 'description']
+      }]
+    });
   }
 
-  /** 🔍 Buscar producto por nombre */
+  public async findProductById(id: number): Promise<Product | null> {
+    return this.productModel.findByPk(id, {
+      include: [{
+        model: Category,
+        as: 'category',
+        attributes: ['id', 'name', 'description']
+      }]
+    });
+  }
+
   public async findProductByName(name: string): Promise<Product | null> {
     return this.productModel.findOne({ where: { name } });
   }
 
-  /** 🧱 Actualizar un producto */
-  public async updateProduct(id: number, data: Partial<ProductAttributes>): Promise<[number, Product[]]> {
-    return this.productModel.update(data, {
-      where: { id },
-      returning: true, // devuelve los registros actualizados (Postgres)
-    });
+  public async updateProduct(id: number, data: Partial<ProductAttributes>): Promise<Product | null> {
+    const product = await this.productModel.findByPk(id);
+    if (!product) return null;
+    
+    await product.update(data);
+    return product;
   }
 
-  /** 🗑️ Eliminar (lógicamente) un producto */
   public async deleteProduct(id: number): Promise<number> {
     return this.productModel.destroy({ where: { id } });
   }
